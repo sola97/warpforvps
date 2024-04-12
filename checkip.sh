@@ -15,7 +15,7 @@ sleep 5
 # Infinite loop to monitor and change IP as needed.
 while true; do
     # Fetch the current IP address using curl and filtering.
-    ipnow=$(curl -s --socks5 127.0.0.1:40000 https://chat.openai.com/cdn-cgi/trace | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b')
+    ipnow=$(curl -s --socks5 127.0.0.1:40000 curl -s https://cloudflare.com/cdn-cgi/trace | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b')
 
     # Log the current IP
     echo "Current IP is $ipnow; excluded IPs are $myip"
