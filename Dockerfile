@@ -14,13 +14,9 @@ RUN apt update && apt install -y \
 
 #生成supervisor守护配置文件，原本的warp-svc基于systemd进行管理，docker内部不太好实现，切换成supervisor进行守护。
 # 配置supervisor来守护warp-svc服务，将输出日志重定向到控制台
-RUN echo "[program:warp-svc]" > /etc/supervisor/conf.d/warp.conf && \
-    echo "command=/usr/bin/warp-svc" >> /etc/supervisor/conf.d/warp.conf && \
-    echo "autostart=true" >> /etc/supervisor/conf.d/warp.conf && \
-    echo "autorestart=true" >> /etc/supervisor/conf.d/warp.conf && \
-    echo "startretries=3" >> /etc/supervisor/conf.d/warp.conf && \
-    echo "stderr_logfile=/dev/stderr" >> /etc/supervisor/conf.d/warp.conf && \
-    echo "stdout_logfile=/dev/stdout" >> /etc/supervisor/conf.d/warp.conf
+
+# 复制supervisor配置文件到容器
+COPY warp.conf /etc/supervisor/conf.d/warp.conf
 
 #生成docker启动脚本，输出日志到控制台。每次启动会自动的完成注册，切换模式。假如各位需要嵌入现有的license，此处自行修改。主要修改warp-cli --accept-tos register这条。
 COPY init.sh /init.sh
