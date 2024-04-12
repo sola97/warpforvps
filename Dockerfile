@@ -1,4 +1,4 @@
-FROM ubuntu:22.10
+FROM ubuntu:22.04
 LABEL mantainer="sola97<my@sora.vip>"
 #下边这一行主要是完成supervisor和cloudflare-warp的安装
 RUN apt update && apt install -y \
@@ -24,7 +24,7 @@ RUN echo "[program:warp-svc]" > /etc/supervisor/conf.d/warp.conf && \
 
 #生成docker启动脚本，输出日志到控制台。每次启动会自动的完成注册，切换模式。假如各位需要嵌入现有的license，此处自行修改。主要修改warp-cli --accept-tos register这条。
 COPY init.sh /init.sh
-COPY checkip.sh /checkip.sh 
+COPY checkip.sh /checkip.sh
 RUN chmod +x /init.sh && chmod +x /checkip.sh
 #默认暴露40000端口
 EXPOSE "40000/tcp"
