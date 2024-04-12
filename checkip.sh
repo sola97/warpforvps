@@ -18,7 +18,7 @@ while true; do
     ipnow=$(curl -s --socks5 127.0.0.1:40000 curl -s https://cloudflare.com/cdn-cgi/trace | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b')
 
     # Log the current IP
-    echo "Current IP is $ipnow; excluded IPs are $myip"
+    echo "Current IP is $ipnow, excluded IPs are $myip"
 
     # Check if the current IP is in the excluded list
     found=false
