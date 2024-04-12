@@ -3,11 +3,11 @@ IFS=',' read -r -a ips_array <<< "$myip"
 sleep 5
 while true
 ipnow=`export ALL_PROXY=socks5://127.0.0.1:40000 && curl https://chat.openai.com/cdn-cgi/trace | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b'`
-echo "current ip is "$ipnow "excluded ip is" $myip >> /var/log/warp.log
+echo "current ip is "$ipnow "excluded ip is" $myip >> /dev/stdout
 do
 
   if [ -z "$myip" ]; then
-    echo "IP address is not set" >> /var/log/warp.log
+    echo "IP address is not set" >> /dev/stdout
     break
   else	
 	  found=false
@@ -18,10 +18,10 @@ do
 	  fi
 		done
 	if [[ $found  == false ]]; then
-    echo "IP address meets the expected state,sleep 10 mins" >> /var/log/warp.log
+    echo "IP address meets the expected state,sleep 10 mins" >> /dev/stdout
     sleep 600
   else
-    echo "Start to change ip address" >> /var/log/warp.log
+    echo "Start to change ip address" >> /dev/stdout
     warp-cli --accept-tos disconnect
     sleep 3
     warp-cli --accept-tos connect
